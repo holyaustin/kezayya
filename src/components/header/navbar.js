@@ -12,6 +12,7 @@ const Navbar = ({ isSticky, isMobile, handleCloseMenu }) => {
         isSticky ? ' is-sticky' : ''
       }`}
     >
+
       {menuItems.map(({ path, label }, i) => (
         <NavLink key={i} path={path} label={label} onClick={handleCloseMenu} />
       ))}
@@ -26,6 +27,7 @@ const styles = {
     display: [null, null, null, null, null, 'flex'],
     alignItems: [null, null, null, 'center'],
     flexGrow: [null, null, null, 1],
+    fontSize: ['10px', null, null, 4],
     a: {
       color: 'white',
       cursor: 'pointer',

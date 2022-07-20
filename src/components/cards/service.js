@@ -5,7 +5,7 @@ const Service = ({ service }) => {
   return (
     <Box sx={styles.service}>
       <Text as="p">{service.title}</Text>
-      <Text as="span">${service.price}/mo</Text>
+      <Text as="span">{service.price}</Text>
     </Box>
   );
 };

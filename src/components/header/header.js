@@ -2,7 +2,8 @@
 import { jsx, Box, Flex, Container, Button } from 'theme-ui';
 import { Fragment, useState } from 'react';
 import Sticky from 'react-stickynode';
-import Logo from 'components/logo';
+import Image from 'components/image';
+import Logo from 'assets/images/logosmallblack.png';
 import TopBar from 'components/topbar';
 import LockIcon from 'components/icons/lock';
 import HamburgerMenu from 'components/hamburger';
@@ -49,7 +50,15 @@ export default function Header() {
           className={state.isSticky ? 'is-sticky' : ''}
         >
           <Container sx={styles.container}>
-            <Logo sx={styles.logo} isSticky={state.isSticky} />
+          <Image src={Logo} loading="lazy" sx={styles.logo} alt="logo" />
+            {/** <Logo sx={styles.logo} isSticky={state.isSticky} /> */}
+            <div 
+              sx={{
+                ...styles.login,
+                color: state.isSticky ? 'text' : 'white',
+              }} > 
+              
+            </div> 
             <Navbar
               isSticky={state.isSticky}
               isMobile={state.isMobileMenu}
@@ -64,8 +73,9 @@ export default function Header() {
                 }}
               >
                 <LockIcon fill={state.isSticky ? '#343D48' : 'white'} />
-                Login
+                Connect Wallet
               </Button>
+              <a href="https://discord.gg" target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
               <Button
                 variant="text"
                 sx={{
@@ -76,6 +86,7 @@ export default function Header() {
               >
                 Join Community
               </Button>
+              </a>
             </Flex>
 
             <HamburgerMenu
@@ -115,6 +126,7 @@ const styles = {
   },
   logo: {
     mr: [null, null, null, null, 6, null, 12],
+    height: ['25px', null, null, '75px'],
   },
   buttonGroup: {
     alignItems: 'center',
@@ -128,6 +140,7 @@ const styles = {
     color: 'white',
     p: 0,
     mr: [null, null, null, null, 5],
+    fontSize: ['10px', null, null, 4],
     svg: {
       mr: 2,
     },
@@ -136,7 +149,7 @@ const styles = {
     backgroundColor: 'white',
     minHeight: [30, null, null, 40],
     p: ['0 12px', null, null, '0 14px'],
-    fontSize: ['10px', null, null, 1],
+    fontSize: ['10px', null, null, 4],
   },
   hamburger: {
     display: [null, null, null, null, null, 'none'],

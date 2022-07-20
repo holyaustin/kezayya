@@ -1,41 +1,18 @@
 /** @jsx jsx */
 import { jsx, Box, Text } from 'theme-ui';
-import { Link } from 'components/link';
 import RightArrow from 'components/icons/right-arrow';
 import GiftBox from 'components/icons/gift-box';
-
-const data = [
-  {
-    tld: '.com',
-    price: 15,
-  },
-  {
-    tld: '.net',
-    price: 14,
-  },
-  {
-    tld: '.org',
-    price: 19,
-  },
-];
 
 const TopBar = () => {
   return (
     <Box as="section" sx={styles.topbar}>
       <Box sx={styles.content}>
         <Text as="span" className="caption">
-          <GiftBox /> Cyber monday sale begin, just grave the hot pricing
+          <GiftBox /> Want to know when new features are added, just follow us on Twitter
         </Text>
-        <Text as="span" className="tlds">
-          {data.map((item, i) => (
-            <strong key={i}>
-              {item.tld} ${item.price}
-            </strong>
-          ))}
-        </Text>
-        <Link path="#">
-          See Pricing <RightArrow />
-        </Link>
+        <a href="https://twitter.com" target="_blank">
+          Follow us here <RightArrow />
+        </a>
       </Box>
     </Box>
   );

@@ -2,39 +2,40 @@
 import { jsx, Box, Container } from 'theme-ui';
 import SectionHeading from 'components/section-heading';
 import Service from 'components/cards/service';
+import { transform } from 'framer-motion';
 
 const services = [
   {
-    title: 'Cloud Hosting',
-    price: 0.63,
+    title: 'Word Documents Storage',
+    price: 'doc, docx, odt, etc'
   },
   {
-    title: 'Web Hosting',
-    price: 0.75,
+    title: 'Speadshee Documents Storage',
+    price: 'xls, xlsx, ods, etc'
   },
   {
-    title: 'VPS Hosting',
-    price: 0.68,
+    title: 'presentation Docunment Storage',
+    price: 'ppt, pptx, odp, etc',
   },
   {
-    title: 'Wordpress Hosting',
-    price: 0.72,
+    title: 'Image file Storage',
+    price: 'gif, jpg, png, webp, etc',
   },
   {
-    title: 'Domains',
-    price: 0.63,
+    title: 'Media file Storage',
+    price: 'mp4, avi, mp3, hevc, etc ',
   },
   {
-    title: 'Email Hosting',
-    price: 0.56,
+    title: 'compressed file storage',
+    price: 'tar, zip, gzip, 7zip, rar, etc',
   },
   {
-    title: 'VPN Service',
-    price: 0.69,
+    title: 'portable file storage',
+    price: 'pdf, PDF/VT, PDF Healthcare, PDF/X, PDF/A, etc ',
   },
   {
-    title: 'Image Cloud',
-    price: 0.75,
+    title: 'Other file types',
+    price: 'Anyother file type'
   },
 ];
 
@@ -44,7 +45,7 @@ const Services = () => {
       <Container>
         <SectionHeading
           slogan="Ideal solutions for you"
-          title="Didn’t find what you were looking for?"
+          title="Didn’t find your file type? Don't worry, Just upload it!"
         />
         <Box sx={styles.grid}>
           {services.map((service, i) => (

@@ -16,21 +16,6 @@ import { rgba } from 'polished';
 import Image from 'components/image';
 import serverRack from 'assets/images/server-rack.png';
 
-const tlds = [
-  {
-    label: '.com',
-    value: '.com',
-  },
-  {
-    label: '.net',
-    value: '.net',
-  },
-  {
-    label: '.org',
-    value: '.org',
-  },
-];
-
 const Banner = () => {
   const [state, setState] = useState({
     domainName: '',
@@ -54,32 +39,20 @@ const Banner = () => {
       <Container>
         <Box sx={styles.grid}>
           <Box as="form" sx={styles.domainCard} onSubmit={handleSubmit}>
-            <Heading>Built your business with a website</Heading>
-            <Flex sx={styles.inputGroup}>
-              <Label htmlFor="domainName" variant="styles.srOnly">
-                Your Domain Name
-              </Label>
-              <Input
-                type="text"
-                id="domainName"
-                value={state.domainName}
-                onChange={handleChange}
-                placeholder="Your domain name"
-              />
-              <Label htmlFor="tld" variant="styles.srOnly">
-                Select TLD
-              </Label>
-              <Select id="tld" defaultValue={state.tld} onChange={handleChange}>
-                {tlds.map((tld, i) => (
-                  <option key={i}>{tld.label}</option>
-                ))}
-              </Select>
-            </Flex>
+            <Heading>KEZAYYA</Heading>
+            <div style={{fontSize: '24px', marginRight: '0.5rem', fontWeight: 'bold'}}>
+              <p>
+              A new and secure way to store and share files and documents on the cloud using decentralized storage mechanism. Try it out!.
+              </p>
+            </div>
+            <a href="https://discord.gg/cTwhdxZz" target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
+
             <Button type="submit" variant="primary" sx={styles.submit}>
               Start for free
             </Button>
-            <Text as="p" sx={styles.note}>
-              No credit card required.
+            </a>
+            <Text as="p" sx={styles.note} style={{color:`red`, fontSize: '15px', marginRight: '0.5rem', fontWeight: 'bold'}}>
+            Don't be left out, Join this amazing web3 revolution..
             </Text>
           </Box>
           <Box as="figure" sx={styles.illustration}>
@@ -174,7 +147,7 @@ const styles = {
     },
   },
   submit: {
-    fontSize: [1, null, null, 2],
+    fontSize: [1, null, null, 6],
     mt: [4],
     minHeight: [45, null, null, 60],
     width: '100%',
