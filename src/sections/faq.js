@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Container } from 'theme-ui';
 import Masonry from 'react-masonry-component';
@@ -7,38 +8,38 @@ import FaqItem from 'components/cards/faq-item';
 const data = [
   {
     id: 1,
-    ques: 'Which domain should I purchase?',
-    ans: `We make it easy to move to CometNine. Simply contact us and we'll move your hosting account from any other provider, regardless of the control panel. If at anytime your website is down for more than 0.1% result`,
+    ques: 'How do i start using this service?',
+    ans: `All you need is a web3 wallet. connect your wallet and start uploading your files and documents`,
   },
   {
     id: 2,
-    ques: 'What are some tips when choosing a name?',
-    ans: `Get your website tests delivered at the home collect a sample from management news. Get your blood tests delivered at the home collect a sample from management news. Get your blood tests delivered at the home collect a sample from management news.`,
+    ques: 'What type of files do you support?',
+    ans: `We suppolrt all types olf files. Documents, Audiofiles, Video files, portable documemts, achive or compressed files. just mention them ].`,
   },
   {
     id: 3,
-    ques: 'What if I need help choosing the right domain?',
-    ans: `Create a hub for cross-functional work that also works with all your other tools. Centralize and standardize communication with Miro. All premium functional are included here with updates.`,
+    ques: 'Do you support directory upload?',
+    ans: `We currently support but single file upload and directory upload also known as folder upload.`,
   },
   {
     id: 4,
-    ques: 'Can I upgrade or downgrade my web hosting plan',
-    ans: `The pricing made me a little hesitant at first but I have been pleasantly surprised by the level of care given by CometNine.`,
+    ques: 'Is this service free?',
+    ans: `This service is free for as much storage as you want. Thanks to Protocol lab. IPFS / Filecoin made this decentralized storege possib;le.`,
   },
   {
     id: 5,
     ques: 'How do I upgrade the storage capacity of my hosting plan?',
-    ans: `Stop your viewers from getting distracted. Publish videos to your own Channel and rest easy knowing viewers won’t be annoyed by ads or pulled down a rabbit hole of unrelated videos.`,
+    ans: `You will contact our customer support for that.`,
   },
   {
     id: 6,
-    ques: 'What is in InMotion Hosting’s uptime rate?',
-    ans: `Designed with beginners in mind and packed with advanced features developers will love. Start with a quick and simple install`,
+    ques: 'Can i ever look for my file?',
+    ans: `Decentralized files cannot be brought down or missing. You files are stored on multiples nodes servers. All this servers are located in diffrent locations all over the globe. be rest assured that your files cannot just go down`,
   },
   {
     id: 7,
-    ques: 'Learn from community on Brandwagon',
-    ans: `Brian Halligan knows that you need more than a great product to have a great brand. Hear his thoughts & score a peek at our wagon.`,
+    ques: 'Where can i know more about this KEZAYYA?',
+    ans: `We are putting up a comprehensive "Getting started documentamtion". meanwhile engage our support team on discord and do follow us on Twitter.`,
   },
 ];
 

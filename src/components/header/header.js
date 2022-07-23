@@ -1,13 +1,15 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Flex, Container, Button } from 'theme-ui';
 import { Fragment, useState } from 'react';
 import Sticky from 'react-stickynode';
 import Image from 'components/image';
-import Logo from 'assets/images/logosmallblack.png';
+// import Logo from 'assets/images/logosmallblack.png';
 import TopBar from 'components/topbar';
 import LockIcon from 'components/icons/lock';
 import HamburgerMenu from 'components/hamburger';
 import Navbar from './navbar';
+import ConnectWallet from 'components/ConnectWallet';
 
 export default function Header() {
   const [state, setState] = useState({
@@ -50,31 +52,17 @@ export default function Header() {
           className={state.isSticky ? 'is-sticky' : ''}
         >
           <Container sx={styles.container}>
-          <Image src={Logo} loading="lazy" sx={styles.logo} alt="logo" />
+          <Image src="/images/logosmallblack.png" loading="lazy" sx={styles.logo} alt="logo" />
             {/** <Logo sx={styles.logo} isSticky={state.isSticky} /> */}
-            <div 
-              sx={{
-                ...styles.login,
-                color: state.isSticky ? 'text' : 'white',
-              }} > 
-              
-            </div> 
+
             <Navbar
               isSticky={state.isSticky}
               isMobile={state.isMobileMenu}
               handleCloseMenu={handleCloseMenu}
             />
             <Flex sx={styles.buttonGroup}>
-              <Button
-                variant="text"
-                sx={{
-                  ...styles.login,
-                  color: state.isSticky ? 'text' : 'white',
-                }}
-              >
-                <LockIcon fill={state.isSticky ? '#343D48' : 'white'} />
-                Connect Wallet
-              </Button>
+              <ConnectWallet/>
+
               <a href="https://discord.gg" target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
               <Button
                 variant="text"
@@ -125,7 +113,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   logo: {
-    mr: [null, null, null, null, 6, null, 12],
+    mr: [null, null, null, null, 3, null, 5],
     height: ['25px', null, null, '75px'],
   },
   buttonGroup: {
@@ -147,9 +135,9 @@ const styles = {
   },
   joinCommunity: {
     backgroundColor: 'white',
-    minHeight: [30, null, null, 40],
+    minHeight: [30, null, null, 60],
     p: ['0 12px', null, null, '0 14px'],
-    fontSize: ['10px', null, null, 4],
+    fontSize: ['4px', null, null, 4],
   },
   hamburger: {
     display: [null, null, null, null, null, 'none'],

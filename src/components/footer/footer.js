@@ -1,9 +1,11 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Text, Container } from 'theme-ui';
 import { rgba } from 'polished';
 import Logo from 'components/icons/logo';
 import { Link } from 'components/link';
 import CallToAction from 'sections/call-to-action';
+import Image from 'components/image';
 import Widget from './widget';
 import { menuItems } from './footer.data';
 import { Fragment } from 'react';
@@ -17,7 +19,8 @@ export default function Footer() {
           <Box sx={styles.footerTopInner}>
             <Box sx={styles.about}>
               <Box sx={styles.logo}>
-                <Logo />
+              <Image src="/images/logosmallblack.png" loading="lazy" sx={styles.logo} alt="logo" />
+                {/**<Logo />*/}
               </Box>
               <Box sx={styles.terms}>
                 <Link path="#!">Terms of use</Link>
@@ -25,7 +28,7 @@ export default function Footer() {
                 <Link path="#!">Privacy</Link>
               </Box>
               <Text as="p" sx={styles.copyright}>
-                Copyright by {new Date().getFullYear()} RedQ, Inc
+                Copyright by {new Date().getFullYear()} Kezzaya LLC
               </Text>
             </Box>
             {menuItems.map(({ id, title, items }) => (

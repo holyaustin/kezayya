@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Text } from 'theme-ui';
 import RightArrow from 'components/icons/right-arrow';

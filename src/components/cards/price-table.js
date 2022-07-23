@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Button, Heading, Text } from 'theme-ui';
 import { IoMdCheckmarkCircle } from 'react-icons/io';

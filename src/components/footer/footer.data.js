@@ -88,22 +88,22 @@ export const menuItems = [
     items: [
       {
         path: '#!',
-        icon: facebook,
+        icon: "/images/icons/facebook.png",
         label: 'Facebook',
       },
       {
         path: '#!',
-        icon: twitter,
+        icon: "/images/icons/twitter.png",
         label: 'Twitter',
       },
       {
         path: '#!',
-        icon: github,
+        icon: "/images/icons/github.png",
         label: 'Github',
       },
       {
         path: '#!',
-        icon: dribbble,
+        icon: "/images/icons/dribbble.png",
         label: 'Dribbble',
       },
     ],

@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box } from 'theme-ui';
 import { NavLink } from 'components/link';
@@ -14,7 +15,7 @@ const Navbar = ({ isSticky, isMobile, handleCloseMenu }) => {
     >
 
       {menuItems.map(({ path, label }, i) => (
-        <NavLink key={i} path={path} label={label} onClick={handleCloseMenu} />
+        <NavLink to={path} key={i} path={path} label={label} onClick={handleCloseMenu} />
       ))}
     </Box>
   );

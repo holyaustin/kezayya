@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import NextLink from 'next/link';
 import { jsx, Link as A } from 'theme-ui';
@@ -24,7 +25,7 @@ export function NavLink({ path, label, children, ...rest }) {
 
 export function Link({ path, label, children, ...rest }) {
   return (
-    <NextLink href={path}>
+    <NextLink href={path} to={path}>
       <A {...rest}>{children ? children : label}</A>
     </NextLink>
   );
@@ -32,7 +33,7 @@ export function Link({ path, label, children, ...rest }) {
 
 export function LearnMore({ path, label, children, ...rest }) {
   return (
-    <NextLink href={path}>
+    <NextLink to={path} href={path} >
       <A sx={styles.learnMore} {...rest}>
         {label ?? 'Learn More'} <IoIosArrowForward size="16px" />
       </A>

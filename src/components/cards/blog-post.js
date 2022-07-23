@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Flex, Image, Heading, Text } from 'theme-ui';
 import { rgba } from 'polished';

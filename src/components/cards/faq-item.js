@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx, Box, Heading, Text } from 'theme-ui';
+/** @jsxRuntime classic */
+/** @jsx jsx */import { jsx, Box, Heading, Text } from 'theme-ui';
 
 const FaqItem = ({ faq, ...props }) => {
   return (

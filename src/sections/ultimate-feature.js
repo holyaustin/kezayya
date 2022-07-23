@@ -1,49 +1,50 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Box, Container } from 'theme-ui';
 import SectionHeading from 'components/section-heading';
 import Feature from 'components/cards/feature';
-
+/**
 import icon1 from 'assets/images/services/1.png';
 import icon2 from 'assets/images/services/2.png';
 import icon3 from 'assets/images/services/3.png';
 import icon4 from 'assets/images/services/4.png';
 import icon5 from 'assets/images/services/5.png';
 import icon6 from 'assets/images/services/6.png';
-
+ */
 const data = [
   {
     id: 1,
-    icon: icon1,
+    icon: '/images/services/1.png',
     title: 'censorship-resistant',
     description: `you are not policed by anyone, no restrictions from government on what to store or how to use`,
   },
   {
     id: 2,
-    icon: icon2,
+    icon: '/images/services/2.png',
     title: 'Bolt Performance',
     description: `File storage and sharing with the speed of Polygon PoS blockchain transaction. `,
   },
   {
     id: 3,
-    icon: icon3,
+    icon: '/images/services/3.png',
     title: 'Secured',
     description: `File are secured. You dont need to be worried about security of personal details. Private mode also available.`,
   },
   {
     id: 4,
-    icon: icon4,
+    icon: '/images/services/4.png',
     title: 'decentralized',
     description: `No more centralized storage where a server houses your file. Kezayya stores your file in a decentralized manner by many nodes. if one node fails, you dont need to panic because other nodes have your file.`,
   },
   {
     id: 5,
-    icon: icon5,
+    icon: '/images/services/5.png',
     title: '5 Star Rating service',
     description: `We offefr great service that is second to non. Good support system and more feature been unveiled`,
   },
   {
     id: 6,
-    icon: icon6,
+    icon: '/images/services/6.png',
     title: 'Users own data',
     description: `All data stored are entirely owned and managed by users`,
   },

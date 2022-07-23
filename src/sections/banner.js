@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import {
   jsx,
@@ -14,49 +15,35 @@ import {
 import { useState } from 'react';
 import { rgba } from 'polished';
 import Image from 'components/image';
-import serverRack from 'assets/images/server-rack.png';
+import ConnectWallet from "components/ConnectWallet";
+
+// import serverRack from './assets/images/server-rack.png';
 
 const Banner = () => {
-  const [state, setState] = useState({
-    domainName: '',
-    tld: '',
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(state);
-  };
-
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      [e.target.id]: e.target.value,
-    });
-  };
-
+ 
   return (
     <Box as="section" id="home" sx={styles.section}>
       <Container>
         <Box sx={styles.grid}>
-          <Box as="form" sx={styles.domainCard} onSubmit={handleSubmit}>
+          <Box as="form" sx={styles.domainCard}>
             <Heading>KEZAYYA</Heading>
             <div style={{fontSize: '24px', marginRight: '0.5rem', fontWeight: 'bold'}}>
               <p>
               A new and secure way to store and share files and documents on the cloud using decentralized storage mechanism. Try it out!.
               </p>
             </div>
-            <a href="https://discord.gg/cTwhdxZz" target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
-
-            <Button type="submit" variant="primary" sx={styles.submit}>
+            <ConnectWallet />
+{/**
+            <Button type="submit" variant="primary" sx={styles.submit }>
               Start for free
             </Button>
-            </a>
+ */}         
             <Text as="p" sx={styles.note} style={{color:`red`, fontSize: '15px', marginRight: '0.5rem', fontWeight: 'bold'}}>
             Don't be left out, Join this amazing web3 revolution..
             </Text>
           </Box>
           <Box as="figure" sx={styles.illustration}>
-            <Image src={serverRack} loading="lazy" alt="sever-rack" />
+            <Image src="/images/server-rack.png" loading="lazy" alt="sever-rack" />
           </Box>
         </Box>
       </Container>
