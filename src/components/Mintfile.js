@@ -55,6 +55,39 @@ const MintFile = () => {
     }
   };
 
+
+         // NFTPort code here
+         async function mintReward() {
+          const { ethereum } = window;
+          const accounts = await ethereum.request({
+            method: 'eth_requestAccounts',
+          });
+
+          console.log('Connected', accounts[0]);
+          //const playerAccount = deploy;
+
+
+          const options = {
+            method: 'POST',
+            url: 'https://api.nftport.xyz/v0/mints/easy/urls',
+            headers: { 'Content-Type': 'application/json', Authorization: '768bfb7a-087d-4ee1-8bb0-5498cc36ad46' },
+            data: {
+              chain: 'polygon',
+              name: 'Kezayya',
+              description: 'Reward for uploading file',
+            // using IPFS to pin reward NFT 
+              file_url: 'https://bafkreievjsq4glmoz4lzvwob6yfsaifpbufsnj47oz47ml4oa6dh4enhbi.ipfs.nftstorage.link/',
+              mint_to_address: accounts[0],
+            },
+          };
+      
+          axios.request(options).then((response) => {
+            console.log(response.data);
+          }).catch((error) => {
+            console.error(error);
+          });
+        }
+
   const sendTxToBlockchain = async (metadata) => {
     try {
       setTxStatus("Adding transaction to Polygon Mumbai Blockchain.");
@@ -100,7 +133,10 @@ const MintFile = () => {
     // 3. preview the minted nft
    previewNFT(metaData, mintNFTTx);
 
-    //navigate("/explore");
+    //4. Mint Reward
+    mintReward();
+
+    //5. navigate("/explore");
     navigate.push('/dashboard')
   };
 

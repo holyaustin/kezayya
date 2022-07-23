@@ -10,7 +10,6 @@ import Web3Modal from "web3modal";
 import { rgba } from 'polished';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import { Alert } from 'react-st-modal';
 
 import fileNFT from "../../artifacts/contracts/kezayya.sol/FileNFT.json";
 import { fileShareAddress } from "../../config";
