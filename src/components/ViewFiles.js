@@ -44,9 +44,9 @@ export default function ViewFiles() {
 
   async function loadfileNFT() {
     /* create a generic provider and query for fileNFTs */
-    const provider = new ethers.providers.JsonRpcProvider("");
+    const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/g2W8xo0aefctNzl-JUagHo0t-3gujrt_");
     const contract = new ethers.Contract(fileShareAddress, fileNFT.abi, provider);
-    const data = await contract.fetchAllStorageItems();
+    const data = await contract.fetchMyFiles();
     console.log("fileNFT data fetched from contract", data);
     /*
     *  map over items returned from smart contract and format
@@ -61,7 +61,7 @@ export default function ViewFiles() {
       const privatefile = (i.filePrivate).toString; 
 
       const item = {
-        privatefile,
+        privatefile: "Yes",
         tokenId: i.tokenId.toNumber(),
         image: getIPFSGatewayURL(meta.data.image),
         name: meta.data.name,
@@ -96,7 +96,7 @@ export default function ViewFiles() {
   if (loadingState === "loaded" && !nfts.length) {
     return (
       <div sx={styles.section}>
-        <h1 className="px-20 py-10 text-3xl">Empty drive, no file yet</h1>
+        <h1 className="px-20 py-10 text-3xl text-white">Empty drive, no file yet</h1>
       </div>
     );
   }

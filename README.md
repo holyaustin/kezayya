@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ![Recyclant](https://bafkreievjsq4glmoz4lzvwob6yfsaifpbufsnj47oz47ml4oa6dh4enhbi.ipfs.nftstorage.link/)
 
 ## Introduction
-Kezayya is a web3 project with the aim of helping users store files and share them in a user friendly manner. It uses the open zepellin ERC721 standard to store file metadata ERI in an EVM based smart contract. The smart contarct is deployed on Polygon Mumbai. Polygon which is an Ethereum scaling and POS Blockchain was the best choice for deployment as to reduce cost of transaction and i nteracting with the blockchain.
+Kezayya is a web3 project with the aim of helping users store files and share them in a user-friendly manner. Decentralized file storage and sharing system. This project intends to build a web3 version of google drive or dropbox for file storage and sharing. It uses the open zeppelin ERC721 standard to store file metadata ERI in an EVM-based smart contract. The smart contract is deployed on Polygon Mumbai. Polygon which is an Ethereum scaling and POS Blockchain was the best choice for deployment to reduce the cost of transactions and interaction with the blockchain.
  
 
 ## Web 3.0 technologies Used
@@ -16,10 +16,20 @@ Backend: Solidity, Node.js
 
 Project initiated and created for ETHGlobal HackFS Hackathon 2022:  
 
-Live Dapp - https://kezayya.spheron.app/
-Live Dapp - https://kezayya.vercel.app/
+This project was made using several technologies. The front-end was designed using a server-side-rendering javascript tech known as NextJS. the latest version of Next was used because of how fast it was to build the project.  IPFS / Filecoin's NFT.Storage was used to store file users file on their decentralized storage. Files can be stored individually and as a folder. TableLand collects users' information with this metadata stored so that it can be queried. NFTPort was used to send users who upload files an NFT as a reward for using the service. 
+The smart contract uses ERC-721 specification to hold metadata URI, ethers.js was used to interact with the smart contract. The contract was deployed to Polygon Mumbai blockchain. The project versioning was done with Vialist. The entire project demo was deployed to Spheron. 
 
-Deployed to Polygon Mumbai: 0x56805DB034dc3675ae363ef7bD6FDA7714b6f19B
+## Live DApp hosted on
+Live Dapp on Spheron:- https://kezayya-nnb3b.spheron.app/
+Live Dapp on Vercel: - https://kezayya.vercel.app/
+
+Deployed to Polygon Mumbai: 
+  export const fileShareAddress = "0x0566FA3B9b0D7Df8Cc3Ba8204727D6a8bEFc841E"
+  export const UserTableAddress = "0x074C83F9355aC141e0086995D7526ef9CD9995d7"
+
+Valist: https://app.valist.io/teamholyaustin/kezayya
+Member: https://app.valist.io/addr/0xa6D6f4556B022c0C7051d62E071c0ACecE5a1228
+
 
 ## Getting Started
 

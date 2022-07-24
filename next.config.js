@@ -8,9 +8,14 @@ const nextConfiguration = {
 module.exports = withPlugins([optimizedImages], nextConfiguration);
 module.exports = {
   webpack5: true,
+  experiments: {
+    topLevelAwait: true, 
+    },
   webpack: (config) => {
+    config.experiments = { ...config.experiments, ...{ topLevelAwait: true }};
     config.resolve.fallback = { fs: false };
-
     return config;
   },
+
+
 };
