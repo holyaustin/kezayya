@@ -71,6 +71,9 @@ export default function Header() {
           <Link href="/addfolder">
           <a>Add Folder</a>
           </Link>
+          <Link href="/fileshare">
+          <a>P2P FileShare </a>
+          </Link>
           <Link href="/analytics">
           <a>Analytics</a>
           </Link>

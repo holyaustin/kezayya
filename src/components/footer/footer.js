@@ -4,7 +4,7 @@ import { jsx, Box, Text, Container } from 'theme-ui';
 import { rgba } from 'polished';
 import Logo from 'components/icons/logo';
 import { Link } from 'components/link';
-import CallToAction from 'sections/call-to-action';
+// import CallToAction from 'sections/call-to-action';
 import Image from 'components/image';
 import Widget from './widget';
 import { menuItems } from './footer.data';
@@ -13,7 +13,7 @@ import { Fragment } from 'react';
 export default function Footer() {
   return (
     <Fragment>
-      <CallToAction />
+      {/** <CallToAction /> */}
       <Box as="footer" sx={styles.footer}>
         <Container>
           <Box sx={styles.footerTopInner}>

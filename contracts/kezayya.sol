@@ -11,15 +11,17 @@ contract FileNFT is ERC721URIStorage {
     Counters.Counter private _tokenIds;
     Counters.Counter private  _itemsShared;
 
-    address owner;
+    // address owner;
+    uint private monthly_value;
+    address private owner;
 
+    mapping(address => bool) accounts;
     mapping(uint256 => StorageItem) private idToStorageItem;
 
     struct StorageItem {
       uint256 tokenId;
       address owner;
       address storageDrive;
-      bool filePrivate;
       bool shared;
     }
 
@@ -27,42 +29,47 @@ contract FileNFT is ERC721URIStorage {
       uint256 indexed tokenId,
       address owner,
       address storageDrive,
-      bool filePrivate,
       bool shared
+    );
+    event SubscriptionMade (
+        address account
+    );
+    event MonthlyPaymentMade (
+        address account
     );
 
     constructor() ERC721("Kezayya", "KEZAYYA") {
       owner = msg.sender;
+      monthly_value = 100000;
     }
 
+
      /* Mints a File*/
-    function createFile(string memory tokenURI, bool filePrivate) public payable returns (uint) {
+    function createFile(string memory tokenURI) public payable returns (uint) {
       _tokenIds.increment();
       uint256 newTokenId = _tokenIds.current();
 
       _mint(msg.sender, newTokenId);
       _setTokenURI(newTokenId, tokenURI);
-      createStorageItem(newTokenId, filePrivate);
+      createStorageItem(newTokenId);
       return newTokenId;
     }
 
     function createStorageItem(
-      uint256 tokenId, bool filePrivate
+      uint256 tokenId
     ) private {
       idToStorageItem[tokenId] =  StorageItem(
         tokenId,
         msg.sender,
         address(this),
-        filePrivate,
         false
       );
 
-       _transfer(msg.sender, address(this), tokenId);
+      _transfer(msg.sender, address(this), tokenId);
       emit StorageItemCreated(
         tokenId,
         msg.sender,
         address(this),
-        filePrivate,
         false
       );
     }
@@ -76,14 +83,6 @@ contract FileNFT is ERC721URIStorage {
       _itemsShared.increment();
     }
     
-    // Transfers ownership of the item, as well as funds between parties 
-    function createFilePrivate(
-      uint256 tokenId
-      ) public payable {
-
-      idToStorageItem[tokenId].filePrivate = true;
-  
-    }
     /* Returns all files on drive */
     function fetchAllStorageItems() public view returns (StorageItem[] memory) {
       uint itemCount = _tokenIds.current();
@@ -101,8 +100,9 @@ contract FileNFT is ERC721URIStorage {
       return items;
     }
 
-    /* Returns only all my files   */
-    function fetchMyFiles() public view returns (StorageItem[] memory) {
+
+    /* Returns only items that a user has created   */
+    function fetchMyFiles() public view returns (StorageItem[]memory) {
       uint totalItemCount = _tokenIds.current();
       uint itemCount = 0;
       uint currentIndex = 0;
@@ -124,29 +124,28 @@ contract FileNFT is ERC721URIStorage {
       }
       return items;
     }
-  
 
-    /* Returns only items a user has listed */
-    function fetchMyPrivateFiles() public view returns (StorageItem[] memory) {
-      uint totalItemCount = _tokenIds.current();
-      uint itemCount = 0;
-      uint currentIndex = 0;
+       function subscribe() external payable {
+        require(!accounts[msg.sender], "Account already subscribed");
+        // require(msg.value == monthly_value, "Wrong value.");
 
-      for (uint i = 0; i < totalItemCount; i++) {
-        if (idToStorageItem[i + 1].owner == msg.sender) {
-          itemCount += 1;
-        }
-      }
-
-      StorageItem[] memory items = new StorageItem[](itemCount);
-      for (uint i = 0; i < totalItemCount; i++) {
-        if (idToStorageItem[i + 1].owner == msg.sender && idToStorageItem[i + 1].filePrivate== true) {
-          uint currentId = i + 1;
-          StorageItem storage currentItem = idToStorageItem[currentId];
-          items[currentIndex] = currentItem;
-          currentIndex += 1;
-        }
-      }
-      return items;
+        accounts[msg.sender] = true;
+        emit SubscriptionMade(msg.sender);
     }
+
+    function payMonthlyValue() external payable {
+        require(accounts[msg.sender], "Account not subscribed");
+        require(msg.value == monthly_value, "Wrong value.");
+
+        emit MonthlyPaymentMade(msg.sender);
+    }
+
+    function withdraw(uint value) external {
+        require(msg.sender == owner, "Address is not the owner");
+        require(value <= address(this).balance, "Value higher than balance.");
+
+        (bool success, ) = owner.call{value: value}("");
+        require(success, "There was an error!");
+    }
+
 }

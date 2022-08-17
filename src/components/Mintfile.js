@@ -10,35 +10,12 @@ import Web3Modal from "web3modal";
 import axios from 'axios'
 import { rgba } from 'polished';
 import { Wallet, providers } from "ethers";
- import { connect } from "@tableland/sdk";
 
 import 'dotenv/config';
 import fileNFT from "../../artifacts/contracts/kezayya.sol/FileNFT.json";
 import { fileShareAddress } from "../../config";
 // const APIKEY = [process.env.NFT_STORAGE_API_KEY];
 const APIKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA4Zjc4ODAwMkUzZDAwNEIxMDI3NTFGMUQ0OTJlNmI1NjNFODE3NmMiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MzA1NjE4NzM4MCwibmFtZSI6InBlbnNpb25maSJ9.agI-2V-FeK_eVRAZ-T6KGGfE9ltWrTUQ7brFzzYVwdM";
-/** 
-// const ALCHEMY_API_KEY = 'https://polygon-mumbai.g.alchemy.com/v2/g2W8xo0aefctNzl-JUagHo0t-3gujrt_';
-// const privateKey = [process.env.PRIVATE_KEY];
-// const wallet = new Wallet(privateKey);
-// An RPC provider must be provided to establish a connection to the chain
-// const provider = new providers.AlchemyProvider("Polygon Mumbai", "ALCHEMY_API_KEY");
-// const signer = wallet.connect(provider);
-//const tableland = await connect({ network: "testnet" });
-
-//const { usertable } = await tableland.create(
-  `name text, id int, owner text, creationdate text, primary key (id)`, // Table schema definition
-  `filelist` // Optional `prefix` used to define a human-readable string
-);
-
-// The table's `name` is in the format `{prefix}_{chainId}_{tableId}`
-console.log(usertable); // e.g., mytable_5_30
-
-// Insert a row into the table
-// @return {WriteQueryResult} On-chain transaction hash of the write query
-const writeRes = await tableland.write(`INSERT INTO ${usertable} (id, name, owner, creationdate) VALUES (0, 'Test File', '0x0000000000000000000000000000000000000000', '24/07/2022');`);
-*/
-
 
 const MintFile = () => {
   const navigate = useRouter();
@@ -48,7 +25,7 @@ const MintFile = () => {
   const [metaDataURL, setMetaDataURl] = useState();
   const [txURL, setTxURL] = useState();
   const [txStatus, setTxStatus] = useState();
-  const [formInput, updateFormInput] = useState({ name: "",  privatefile: "false" });
+  const [formInput, updateFormInput] = useState({ name: "" });
 
   const handleFileUpload = (event) => {
     console.log("file for upload selected...");
@@ -60,8 +37,8 @@ const MintFile = () => {
   };
 
   const uploadNFTContent = async (inputFile) => {
-    const { name, privatefile } = formInput;
-    if (!name || !privatefile|| !inputFile) return;
+    const { name } = formInput;
+    if (!name || !inputFile) return;
     const nftStorage = new NFTStorage({ token: APIKEY, });
     try {
       console.log("Trying to upload file to ipfs");
@@ -81,39 +58,6 @@ const MintFile = () => {
     }
   };
 
-
-         // NFTPort code here
-         async function mintReward() {
-          const { ethereum } = window;
-          const accounts = await ethereum.request({
-            method: 'eth_requestAccounts',
-          });
-
-          console.log('Connected', accounts[0]);
-          //const playerAccount = deploy;
-
-
-          const options = {
-            method: 'POST',
-            url: 'https://api.nftport.xyz/v0/mints/easy/urls',
-            headers: { 'Content-Type': 'application/json', Authorization: '768bfb7a-087d-4ee1-8bb0-5498cc36ad46' },
-            data: {
-              chain: 'polygon',
-              name: 'Kezayya',
-              description: 'Reward for uploading file',
-            // using IPFS to pin reward NFT 
-              file_url: 'https://bafkreievjsq4glmoz4lzvwob6yfsaifpbufsnj47oz47ml4oa6dh4enhbi.ipfs.nftstorage.link/',
-              mint_to_address: accounts[0],
-            },
-          };
-      
-          axios.request(options).then((response) => {
-            console.log(response.data);
-          }).catch((error) => {
-            console.error(error);
-          });
-        }
-
   const sendTxToBlockchain = async (metadata) => {
     try {
       setTxStatus("Adding transaction to Polygon Mumbai Blockchain.");
@@ -121,13 +65,13 @@ const MintFile = () => {
       const connection = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
 
-      const privatefile = formInput.privatefile.toString();
+      // const privatefile = formInput.privatefile.toString();
 
       const connectedContract = new ethers.Contract(fileShareAddress, fileNFT.abi, provider.getSigner());
       console.log("Connected to contract", fileShareAddress);
       console.log("IPFS blockchain uri is ", metadata.url);
 
-      const mintNFTTx = await connectedContract.createFile(metadata.url, privatefile);
+      const mintNFTTx = await connectedContract.createFile(metadata.url);
       console.log("File successfully created and added to Blockchain");
       await mintNFTTx.wait();
       return mintNFTTx;
@@ -144,8 +88,8 @@ const MintFile = () => {
     setImageView(imgViewString);
     setMetaDataURl(getIPFSGatewayURL(metaData.url));
     setTxURL(`https://mumbai.polygonscan.com/tx/${mintNFTTx.hash}`);
-    setTxStatus("File addion was successfully!");
-    console.log("Preview details completed");
+    setTxStatus("File addition was successfully!");
+    console.log("File preview completed");
   };
 
   const mintNFTFile = async (e, uploadedFile) => {
@@ -160,10 +104,10 @@ const MintFile = () => {
    previewNFT(metaData, mintNFTTx);
 
     //4. Mint Reward
-    mintReward();
+    // mintReward();
 
     //5. navigate("/explore");
-    navigate.push('/dashboard')
+    navigate.push('/dashboard');
   };
 
   const getIPFSGatewayURL = (ipfsURL) => {
@@ -186,29 +130,22 @@ const MintFile = () => {
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
           />
-          <select
-            className="mt-5 border rounded p-4 text-xl text-black bg-white"
-            onChange={(e) => updateFormInput({ ...formInput, privatefile: e.target.value })}
-          ><option value="select">File should be private?</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option> 
-          </select>
           <br />
 
           <div className="MintNFT text-black text-xl text-black">
             <form>
               <h3>Select a File</h3>
-              <input type="file" onChange={handleFileUpload} className="text-black mt-5 border rounded p-4 text-xl" />
+              <input type="file" onChange={handleFileUpload} className="text-black mt-2 border rounded  text-xl" />
             </form>
             {txStatus && <p>{txStatus}</p>}
-            <br />
+            
             {metaDataURL && <p className="text-blue"><a href={metaDataURL} className="text-blue">Metadata on IPFS</a></p>}
-            <br />
+            
             {txURL && <p><a href={txURL} className="text-blue">See the mint transaction</a></p>}
-            <br />
+           
             {errorMessage}
 
-            <br />
+            
             {imageView && (
             <iframe
               className="mb-10"

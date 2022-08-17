@@ -4,17 +4,16 @@
 import React, { useState } from "react";
 import { jsx, Box } from 'theme-ui';
 import { NFTStorage } from "nft.storage";
-import { filesFromPath } from 'files-from-path'
-import path from 'path'
-import { useRouter } from 'next/router'
+import { filesFromPath } from "files-from-path";
+import path from "path";
+import { useRouter } from 'next/router';
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { rgba } from 'polished';
-// import 'dotenv/config';
+import 'dotenv/config';
 import fileNFT from "../../artifacts/contracts/kezayya.sol/FileNFT.json";
 import { fileShareAddress } from "../../config";
-// const APIKEY = [process.env.NFT_STORAGE_API_KEY];
-const APIKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA4Zjc4ODAwMkUzZDAwNEIxMDI3NTFGMUQ0OTJlNmI1NjNFODE3NmMiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MzA1NjE4NzM4MCwibmFtZSI6InBlbnNpb25maSJ9.agI-2V-FeK_eVRAZ-T6KGGfE9ltWrTUQ7brFzzYVwdM";
+const APIKEY = [process.env.NFT_STORAGE_API_KEY];
 
 const MintFile = () => {
   const navigate = useRouter();
@@ -25,16 +24,14 @@ const MintFile = () => {
   const [metaDataURL, setMetaDataURl] = useState();
   const [txURL, setTxURL] = useState();
   const [txStatus, setTxStatus] = useState();
-  const [formInput, updateFormInput] = useState({ name: "",  privatefile: "false" });
+  const [formInput, updateFormInput] = useState({ name: ""});
 
   const handleFileUpload = (event) => {
     console.log("folder for upload selected...");
-    setUploadedFile(Array.from(event.target.files));
+    //setUploadedFile(Array.from(event.target.files));
     // onPickFiles(Array.from(e.target.files));
     // const handleFilesChange = e => onPickFiles(Array.from(e.target.files))
-    //setUploadedFile(event.target.files);
-    
-   // setUploadedFile(files);
+    setUploadedFile(event.target.files[0]);
     setTxStatus("");
     setImageView("");
     setMetaDataURl("");
@@ -42,24 +39,34 @@ const MintFile = () => {
   };
 
   const uploadNFTContent = async (inputFile) => {
-    const { name, privatefile } = formInput;
-    if (!name || !privatefile|| !inputFile) return;
+    const { name } = formInput;
+    if (!name || !inputFile) return;
+    console.log("About to upload selected Folder...");
+    // const filePaths = inputFile.map(f => f.path)
+    // console.log(`storing files from {filePaths}`)
+    // setFilePaths(filePaths)
 
-    const filePaths = inputFile.map(f => f.path)
-    console.log(`storing files from {filePaths}`)
-    setFilePaths(filePaths)
+    if (process.argv.length !== 3) {
+      console.error(`usage: ${process.argv[0]} ${process.argv[1]} <directory-path>`)
+    }
+    const directoryPath = process.argv[2];
+    const files = filesFromPath(directoryPath, {
+       // see the note about pathPrefix below
+      hidden: true, // use the default of false if you want to ignore files that start with '.'
+    })
 
     const nftStorage = new NFTStorage({ APIKEY });
     try {
       console.log("Trying to upload folder to ipfs");
       setTxStatus("Uploading Folder to IPFS & Filecoin via NFT.storage.");
-      console.log(`storing files from {filePaths}`)
-      const metaData = await nftStorage.storeDirectory(filePaths);
+      console.log(`storing file(s) from ${path}`)
+      //console.log(`storing files from {filePaths}`)
+      const metaData = await nftStorage.storeDirectory(files);
       console.log("cid is: ", { metaData });
       setMetaDataURl(metaData.url);
       
       
-      const status = await nftStorage.status(metadata)
+      const status = await nftStorage.status(metaData)
       console.log(status)
       return metaData;
     } catch (error) {
@@ -98,7 +105,7 @@ const MintFile = () => {
     //setImageView(imgViewString);
     setMetaDataURl(getIPFSGatewayURL(metaData));
     //setTxURL(`https://mumbai.polygonscan.com/tx/${mintNFTTx.hash}`);
-    setTxStatus("File addion was successfully!");
+    setTxStatus("File addition was successfully!");
     console.log("Preview details completed");
   };
 
@@ -133,47 +140,17 @@ const MintFile = () => {
       <div className="flex justify-center bg-purple-100">
         <div className="w-1/2 flex flex-col pb-12 ">
         <input
-            placeholder="Give the file a name"
+            placeholder="Give the folder a name"
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
           />
-          <select
-            className="mt-5 border rounded p-4 text-xl text-black bg-white"
-            onChange={(e) => updateFormInput({ ...formInput, privatefile: e.target.value })}
-          ><option value="select">Folder should be private?</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option> 
-          </select>
-          <br />
-
           <div className="MintNFT text-black text-xl text-black">
             <form>
               <h3>Select a Folder</h3>
-              <input type="file" multiple directory="" mozdirectory=""  webkitdirectory='true' onChange={handleFileUpload} className="text-black mt-5 border rounded p-4 text-xl" />
+              <input type="file" multiple directory="" mozdirectory=""  webkitdirectory='true' onChange={handleFileUpload} className="text-black mt-2 border rounded text-xl" />
             </form>
             {txStatus && <p>{txStatus}</p>}
-            <br />
-            {metaDataURL && <p className="text-blue"><a href={metaDataURL} className="text-blue">Metadata on IPFS</a></p>}
-            <br />
-            {txURL && <p><a href={txURL} className="text-blue">See the mint transaction</a></p>}
-            <br />
-            {errorMessage}
-
-            <br />
-            {imageView && (
-            <iframe
-              className="mb-10"
-              title="File"
-              src={imageView}
-              alt="File preview"
-              frameBorder="0"
-              scrolling="auto"
-              height="50%"
-              width="100%"
-            />
-            )}
-
-          </div>
+            </div>
 
           <button type="button" onClick={(e) => mintNFTFile(e, uploadedFile)} className="font-bold mt-20 bg-purple-700 text-white text-2xl rounded p-4 shadow-lg">
             Publish Folder

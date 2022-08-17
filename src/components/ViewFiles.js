@@ -21,33 +21,28 @@ export default function ViewFiles() {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   useEffect(() => {
-    // eslint-disable-next-line no-use-before-define
     loadfileNFT();
   }, []);
-  const getIPFSGatewayURL = (ipfsURL) => {
-    const urlArray = ipfsURL.split("/");
-    const ipfsGateWayURL = `https://${urlArray[2]}.ipfs.nftstorage.link/${urlArray[3]}`;
-    return ipfsGateWayURL;
-  };
 
   // const rpcUrl = "https://matic-mumbai.chainstacklabs.com";
   // const rpcUrl = "http://localhost:8545";
 
-  const copyToClipBoard = async copyMe => {
-    try {
-      await navigator.clipboard.writeText(copyMe);
-      setCopySuccess('Copied!');
-    } catch (err) {
-      setCopySuccess('Failed to copy!');
-    }
-  };
-
   async function loadfileNFT() {
-    /* create a generic provider and query for fileNFTs */
-    const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/g2W8xo0aefctNzl-JUagHo0t-3gujrt_");
+    /* create a generic provider and query for fileNFTs 
+    const provider = new ethers.providers.JsonRpcProvider();
     const contract = new ethers.Contract(fileShareAddress, fileNFT.abi, provider);
-    const data = await contract.fetchMyFiles();
+    const data = await contract.fetchMyNFTs();
     console.log("fileNFT data fetched from contract", data);
+    */
+    const web3Modal = new Web3Modal({
+      network: 'mainnet',
+      cacheProvider: true,
+    })
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(fileShareAddress, fileNFT.abi, signer);
+    const data = await contract.fetchMyFiles();
     /*
     *  map over items returned from smart contract and format
     *  them as well as fetch their token metadata
@@ -58,10 +53,9 @@ export default function ViewFiles() {
       const httpUri = getIPFSGatewayURL(tokenUri);
       console.log("Http Uri is ", httpUri);
       const meta = await axios.get(httpUri);
-      const privatefile = (i.filePrivate).toString; 
+      // const privatefile = (i.filePrivate).toString; 
 
       const item = {
-        privatefile: "Yes",
         tokenId: i.tokenId.toNumber(),
         image: getIPFSGatewayURL(meta.data.image),
         name: meta.data.name,
@@ -69,11 +63,30 @@ export default function ViewFiles() {
         sharelink: getIPFSGatewayURL(meta.data.image),
       };
       console.log("item returned is ", item);
+      
       return item;
     }));
+
     setNfts(items);
     setLoadingState("loaded");
   }
+
+  const getIPFSGatewayURL = (ipfsURL) => {
+    const urlArray = ipfsURL.split("/");
+    const ipfsGateWayURL = `https://${urlArray[2]}.ipfs.nftstorage.link/${urlArray[3]}`;
+    return ipfsGateWayURL;
+  };
+
+  const copyToClipBoard = async copyMe => {
+    try {
+      await navigator.clipboard.writeText(copyMe);
+      setCopySuccess('Copied!');
+    } catch (err) {
+      setCopySuccess('Failed to copy!');
+    }
+  };
+
+
   async function share(nft) {
     /* needs the user to sign the transaction, so will use Web3Provider and sign it */
     console.log("item id clicked is", nft.tokenId);
@@ -118,8 +131,9 @@ export default function ViewFiles() {
                 scrolling="no"
                 height="200px"
                 width="100%"
+                objectFit="cover"
                 src={`${nft.image}#toolbar=0`}
-                className="py-3 object-fill h-500"
+                className="py-3 object-cover h-500"
               />
               <div className="p-1">
                 <p style={{ height: "34px" }} className="text-xl text-purple-700 font-semibold">Name: {nft.name}</p>
@@ -127,7 +141,7 @@ export default function ViewFiles() {
               </div>
               {/** onClick={() => share(nft)} */}
               <div className="p-2 bg-black">
-              <Popup trigger={<button type="button" className="w-full bg-purple-700 text-white font-bold py-2 px-2 rounded" >Share / Get Link</button>} 
+              <Popup trigger={<button type="button" className="w-full bg-purple-700 text-white font-bold py-2 px-2 rounded" >Get Share Link</button>} 
                   position="bottom center">
                 <div className=" bg-purple-200 text-black font-bold py-2 px-2 rounded">{nft.sharelink}</div>
                 <button onClick={() => copyToClipBoard([nft.sharelink])}>Copy Link</button>
